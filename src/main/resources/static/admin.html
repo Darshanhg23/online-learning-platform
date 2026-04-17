@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel — LearnHub</title>
+  <meta name="description" content="Admin dashboard for LearnHub — view all activity logs, registered users, and enrollments."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>"/>
+  <style>
+    /* ── Admin Panel Styles ── */
+    .admin-header {
+      background: linear-gradient(135deg, rgba(108,99,255,0.15) 0%, rgba(255,101,132,0.08) 100%);
+      border-bottom: 1px solid var(--border-light);
+      padding: 2.5rem 2rem 2rem;
+    }
+    .admin-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,101,132,0.12);
+      border: 1px solid rgba(255,101,132,0.25);
+      color: var(--secondary);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .admin-header h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    /* ── Summary Cards ── */
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .admin-stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .admin-stat-card:hover { transform: translateY(-3px); border-color: rgba(108,99,255,0.3); }
+    .asc-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .asc-icon.purple { background: rgba(108,99,255,0.15); }
+    .asc-icon.green  { background: rgba(67,233,123,0.15); }
+    .asc-icon.orange { background: rgba(247,151,30,0.15); }
+    .asc-icon.red    { background: rgba(255,101,132,0.15); }
+    .asc-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .asc-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
+
+    /* ── Tab Bar ── */
+    .admin-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 2rem;
+    }
+    .admin-tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .admin-tab-btn.active {
+      color: var(--primary-light);
+      border-bottom-color: var(--primary);
+    }
+    .admin-tab-btn:hover { color: var(--text); }
+
+    /* ── Filter + Search bar ── */
+    .admin-toolbar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .admin-search {
+      flex: 1;
+      min-width: 220px;
+      padding: 9px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .admin-search:focus { border-color: var(--primary); }
+    .admin-search::placeholder { color: var(--text-dim); }
+
+    .filter-select {
+      padding: 9px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      cursor: pointer;
+    }
+    .filter-select:focus { border-color: var(--primary); }
+
+    .btn-refresh {
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      background: rgba(108,99,255,0.12);
+      border: 1px solid rgba(108,99,255,0.25);
+      color: var(--primary-light);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+    }
+    .btn-refresh:hover { background: rgba(108,99,255,0.2); }
+
+    /* ── Table ── */
+    .admin-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-light);
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .admin-table th {
+      background: rgba(108,99,255,0.08);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .admin-table td {
+      padding: 11px 16px;
+      border-top: 1px solid var(--border-light);
+      color: var(--text);
+      vertical-align: middle;
+    }
+    .admin-table tr:hover td { background: var(--card-hover, rgba(255,255,255,0.03)); }
+
+    /* Action badges */
+    .action-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .action-LOGIN     { background:rgba(67,233,123,0.12); color:#43e97b; border:1px solid rgba(67,233,123,0.25); }
+    .action-LOGOUT    { background:rgba(255,200,60,0.12); color:#f7c43e; border:1px solid rgba(255,200,60,0.25); }
+    .action-REGISTER  { background:rgba(108,99,255,0.12); color:var(--primary-light); border:1px solid rgba(108,99,255,0.25); }
+    .action-ENROLL    { background:rgba(247,151,30,0.12); color:#f7971e; border:1px solid rgba(247,151,30,0.25); }
+    .action-LOGIN_FAILED { background:rgba(255,101,132,0.12); color:var(--secondary); border:1px solid rgba(255,101,132,0.25); }
+
+    .empty-table { text-align:center; padding:3rem; color:var(--text-muted); }
+
+    /* Panel section */
+    .admin-panel { max-width:1200px; margin:0 auto; padding:2.5rem 2rem; }
+    .panel-section { display:none; }
+    .panel-section.active { display:block; }
+    .section-title-sm {
+      font-family:'Outfit',sans-serif;
+      font-size:1.1rem;
+      font-weight:700;
+      margin-bottom:1.25rem;
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+    }
+    .count-badge {
+      background:rgba(108,99,255,0.15);
+      color:var(--primary-light);
+      padding:2px 9px;
+      border-radius:999px;
+      font-size:0.78rem;
+      font-weight:700;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo"><span class="logo-icon">🎓</span> LearnHub</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="dashboard.html">My Courses</a></li>
+    <li><a href="admin.html" class="active">Admin</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ADMIN HEADER -->
+<div class="admin-header" style="padding-top: calc(var(--nav-height) + 2rem);">
+  <div class="admin-header-inner">
+    <div>
+      <div class="admin-badge">🛡️ Admin Panel</div>
+      <h1>Platform Overview</h1>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-top:4px;">Monitor all user activity, logins, and enrollments in real time</p>
+    </div>
+    <button class="btn-refresh" onclick="loadAll()">🔄 Refresh Data</button>
+  </div>
+</div>
+
+<div class="admin-panel">
+
+  <!-- ── Summary Cards ── -->
+  <div class="admin-stats" id="adminStats">
+    <div class="admin-stat-card">
+      <div class="asc-icon purple">👥</div>
+      <div><div class="asc-num" id="statUsers">—</div><div class="asc-label">Registered Users</div></div>
+    </div>
+    <div class="admin-stat-card">
+      <div class="asc-icon green">✅</div>
+      <div><div class="asc-num" id="statLogins">—</div><div class="asc-label">Total Logins</div></div>
+    </div>
+    <div class="admin-stat-card">
+      <div class="asc-icon orange">📚</div>
+      <div><div class="asc-num" id="statEnrolls">—</div><div class="asc-label">Enrollments</div></div>
+    </div>
+    <div class="admin-stat-card">
+      <div class="asc-icon red">⚠️</div>
+      <div><div class="asc-num" id="statFailed">—</div><div class="asc-label">Failed Logins</div></div>
+    </div>
+  </div>
+
+  <!-- ── Tab Bar ── -->
+  <div class="admin-tabs">
+    <button class="admin-tab-btn active" id="tabLogs" onclick="switchTab('logs')">📋 Activity Logs</button>
+    <button class="admin-tab-btn" id="tabUsers" onclick="switchTab('users')">👥 Users</button>
+  </div>
+
+  <!-- ── ACTIVITY LOGS PANEL ── -->
+  <div class="panel-section active" id="logsPanel">
+    <div class="admin-toolbar">
+      <input class="admin-search" id="logSearch" type="text" placeholder="🔍 Search by user, action, or detail…" oninput="filterLogs()"/>
+      <select class="filter-select" id="actionFilter" onchange="filterLogs()">
+        <option value="">All Actions</option>
+        <option value="LOGIN">LOGIN</option>
+        <option value="LOGOUT">LOGOUT</option>
+        <option value="REGISTER">REGISTER</option>
+        <option value="ENROLL">ENROLL</option>
+        <option value="LOGIN_FAILED">LOGIN_FAILED</option>
+      </select>
+    </div>
+    <div class="section-title-sm">
+      📋 Activity Logs
+      <span class="count-badge" id="logCount">0</span>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table" id="logsTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Action</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Detail</th>
+            <th>IP Address</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody id="logsBody">
+          <tr><td colspan="7" class="empty-table">⏳ Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── USERS PANEL ── -->
+  <div class="panel-section" id="usersPanel">
+    <div class="admin-toolbar">
+      <input class="admin-search" id="userSearch" type="text" placeholder="🔍 Search by name or email…" oninput="filterUsers()"/>
+    </div>
+    <div class="section-title-sm">
+      👥 Registered Users
+      <span class="count-badge" id="userCount">0</span>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table" id="usersTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Joined At</th>
+          </tr>
+        </thead>
+        <tbody id="usersBody">
+          <tr><td colspan="5" class="empty-table">⏳ Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🎓 LearnHub</div>
+  <p>Online Learning Platform — Admin Panel &copy; 2026</p>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script>
+  initNavAuth();
+
+  let allLogs  = [];
+  let allUsers = [];
+
+  // ── Tab Switching ─────────────────────────────────────────────────────────
+  function switchTab(tab) {
+    document.querySelectorAll('.panel-section').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tab + 'Panel').classList.add('active');
+    document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  }
+
+  // ── Load all data ─────────────────────────────────────────────────────────
+  async function loadAll() {
+    await Promise.all([loadLogs(), loadUsers()]);
+  }
+
+  async function loadLogs() {
+    try {
+      const res = await fetch('/api/admin/logs');
+      allLogs = await res.json();
+      renderLogs(allLogs);
+      updateStats();
+    } catch {
+      document.getElementById('logsBody').innerHTML =
+        '<tr><td colspan="7" class="empty-table">⚠️ Could not load logs. Is the backend running?</td></tr>';
+    }
+  }
+
+  async function loadUsers() {
+    try {
+      const res = await fetch('/api/admin/users');
+      allUsers = await res.json();
+      renderUsers(allUsers);
+      document.getElementById('statUsers').textContent = allUsers.length;
+    } catch {
+      document.getElementById('usersBody').innerHTML =
+        '<tr><td colspan="5" class="empty-table">⚠️ Could not load users.</td></tr>';
+    }
+  }
+
+  // ── Render Logs ───────────────────────────────────────────────────────────
+  function renderLogs(logs) {
+    const tbody = document.getElementById('logsBody');
+    document.getElementById('logCount').textContent = logs.length;
+
+    if (logs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty-table">No logs found.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = logs.map(log => `
+      <tr>
+        <td style="color:var(--text-dim);font-size:0.78rem;">#${log.id}</td>
+        <td><span class="action-badge action-${log.action}">${log.action}</span></td>
+        <td style="font-weight:600;">${log.userName || '<span style="color:var(--text-dim)">—</span>'}</td>
+        <td style="color:var(--text-muted);font-size:0.83rem;">${log.userEmail || '—'}</td>
+        <td style="color:var(--text-muted);font-size:0.83rem;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${log.detail || '—'}</td>
+        <td style="font-size:0.78rem;color:var(--text-dim);font-family:monospace;">${log.ipAddress || '—'}</td>
+        <td style="font-size:0.78rem;color:var(--text-dim);white-space:nowrap;">${formatDate(log.loggedAt)}</td>
+      </tr>
+    `).join('');
+  }
+
+  // ── Render Users ──────────────────────────────────────────────────────────
+  function renderUsers(users) {
+    const tbody = document.getElementById('usersBody');
+    document.getElementById('userCount').textContent = users.length;
+
+    if (users.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty-table">No users registered yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = users.map(u => `
+      <tr>
+        <td style="color:var(--text-dim);font-size:0.78rem;">#${u.id}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#fff;flex-shrink:0;">
+              ${u.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+            </div>
+            <span style="font-weight:600;">${u.name}</span>
+          </div>
+        </td>
+        <td style="color:var(--text-muted);font-size:0.85rem;">${u.email}</td>
+        <td><span class="action-badge action-REGISTER">${u.role}</span></td>
+        <td style="font-size:0.78rem;color:var(--text-dim);white-space:nowrap;">${formatDate(u.createdAt)}</td>
+      </tr>
+    `).join('');
+  }
+
+  // ── Filters ───────────────────────────────────────────────────────────────
+  function filterLogs() {
+    const keyword = document.getElementById('logSearch').value.toLowerCase();
+    const action  = document.getElementById('actionFilter').value;
+    const filtered = allLogs.filter(l => {
+      const matchKw = !keyword ||
+        (l.userName  || '').toLowerCase().includes(keyword) ||
+        (l.userEmail || '').toLowerCase().includes(keyword) ||
+        (l.action    || '').toLowerCase().includes(keyword) ||
+        (l.detail    || '').toLowerCase().includes(keyword);
+      const matchAct = !action || l.action === action;
+      return matchKw && matchAct;
+    });
+    renderLogs(filtered);
+  }
+
+  function filterUsers() {
+    const keyword = document.getElementById('userSearch').value.toLowerCase();
+    const filtered = allUsers.filter(u =>
+      u.name.toLowerCase().includes(keyword) ||
+      u.email.toLowerCase().includes(keyword)
+    );
+    renderUsers(filtered);
+  }
+
+  // ── Stats ─────────────────────────────────────────────────────────────────
+  function updateStats() {
+    document.getElementById('statLogins').textContent =
+      allLogs.filter(l => l.action === 'LOGIN').length;
+    document.getElementById('statEnrolls').textContent =
+      allLogs.filter(l => l.action === 'ENROLL').length;
+    document.getElementById('statFailed').textContent =
+      allLogs.filter(l => l.action === 'LOGIN_FAILED').length;
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function formatDate(isoStr) {
+    if (!isoStr) return '—';
+    const d = new Date(isoStr);
+    return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }) +
+           ' ' + d.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  loadAll();
+</script>
+</body>
+</html>

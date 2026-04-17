@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Course Detail — LearnHub</title>
+  <meta name="description" content="View course details, lessons, and enroll to start learning."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo"><span class="logo-icon">🎓</span> LearnHub</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="courses.html" class="active">Courses</a></li>
+    <li><a href="dashboard.html">My Courses</a></li>
+    <li><a href="dashboard.html" class="nav-cta">Dashboard</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- Loading State -->
+  <div id="loadingState" class="spinner-wrapper" style="min-height:60vh; align-items:center;">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Course Hero Detail -->
+  <div id="courseDetailHero" class="course-detail-hero hidden">
+    <div class="course-detail-inner">
+      <!-- Left: Course Info -->
+      <div class="course-detail-info">
+        <div>
+          <span class="course-badge" id="detailCategory">Category</span>
+        </div>
+        <h1 class="course-detail-title" id="detailTitle">Course Title</h1>
+        <p class="course-detail-desc" id="detailDesc">Description</p>
+        <div class="course-meta-row" id="detailMeta">
+          <!-- loaded via JS -->
+        </div>
+        <div style="margin-top:0.5rem;">
+          <a href="courses.html" style="color:var(--text-muted); font-size:0.85rem; display:inline-flex; align-items:center; gap:4px;">← Back to All Courses</a>
+        </div>
+      </div>
+
+      <!-- Right: Enrollment Card -->
+      <div class="enrollment-card">
+        <div class="course-thumb-preview" id="detailThumbPreview">📘</div>
+        <h3>🎯 Ready to Learn?</h3>
+
+        <!-- Progress (shown if enrolled) -->
+        <div id="progressSection" class="hidden">
+          <div class="progress-container">
+            <div class="progress-label">
+              <span>Progress</span>
+              <strong id="progressPercent">0%</strong>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+            </div>
+          </div>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem; margin-bottom:1.25rem;">
+            <span id="completedLessonsCount">0</span> of <span id="totalLessonsCount">0</span> lessons completed
+          </p>
+        </div>
+
+        <button class="btn-enroll-big" id="enrollBtn" onclick="handleEnroll()">
+          🚀 Enroll Now — It's Free
+        </button>
+        <div id="enrollMessage" style="font-size:0.8rem; color:var(--text-muted); text-align:center; margin-top:0.5rem;"></div>
+
+        <div style="margin-top:1.25rem; border-top:1px solid var(--border-light); padding-top:1.25rem;">
+          <div style="display:flex; flex-direction:column; gap:0.6rem; font-size:0.85rem; color:var(--text-muted);">
+            <span>⏱️ Duration: <strong id="cardDuration" style="color:var(--text);">—</strong></span>
+            <span>📖 Lessons: <strong id="cardLessons" style="color:var(--text);">—</strong></span>
+            <span>👤 Instructor: <strong id="cardInstructor" style="color:var(--text);">—</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lessons Section -->
+  <section class="lessons-section" id="lessonsSection" style="display:none;">
+    <h2>📋 Course Lessons</h2>
+    <div id="notEnrolledNote" class="hidden" style="background:rgba(108,99,255,0.08); border:1px solid rgba(108,99,255,0.2); border-radius:var(--radius-sm); padding:1rem 1.25rem; margin-bottom:1.5rem; font-size:0.88rem; color:var(--text-muted);">
+      🔒 Enroll in this course to track your lesson progress and mark completions.
+    </div>
+    <div class="lesson-list" id="lessonList">
+      <!-- Loaded via JS -->
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🎓 LearnHub</div>
+  <p>Online Learning Platform — Internship Project &copy; 2026</p>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/course-detail.js"></script>
+<script>initNavAuth();</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearnHub — Online Learning Platform</title>
+  <meta name="description" content="Browse and enroll in top courses in Programming, Web Development, Backend, and Database. Learn from expert instructors at your own pace." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <span class="logo-icon">🎓</span> LearnHub
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="dashboard.html">My Courses</a></li>
+    <li><a href="admin.html">⚙️ Admin</a></li>
+    <li><a href="dashboard.html" class="nav-cta">Dashboard</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span></span> Live Platform — 6 Courses Available
+      </div>
+      <h1>Learn Without <span class="gradient-text">Limits.</span><br/>Grow Without Boundaries.</h1>
+      <p>Explore expert-led courses in Programming, Web Development, Backend, and Databases. Track your progress and complete lessons at your own pace.</p>
+      <div class="hero-buttons">
+        <a href="courses.html" class="btn-primary" id="exploreCoursesBtn">🚀 Explore Courses</a>
+        <a href="dashboard.html" class="btn-secondary" id="myCoursesBtn">📚 My Dashboard</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number" id="totalCoursesStat">6</div>
+          <div class="stat-label">Expert Courses</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" id="enrolledStat">0</div>
+          <div class="stat-label">Enrolled</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Free Access</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED COURSES -->
+  <div style="background: var(--bg2); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <section class="section">
+      <div class="section-header">
+        <div class="section-label">⭐ Hand-picked</div>
+        <h2 class="section-title">Featured Courses</h2>
+        <p class="section-sub">Our most popular courses loved by learners worldwide</p>
+      </div>
+      <div class="courses-grid" id="featuredGrid">
+        <div class="spinner-wrapper"><div class="spinner"></div></div>
+      </div>
+      <div style="text-align:center; margin-top:2.5rem;">
+        <a href="courses.html" class="btn-secondary" id="viewAllBtn" style="display:inline-flex;">View All Courses →</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- WHY LEARNHUB -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-label">✨ Why Us</div>
+      <h2 class="section-title">Everything You Need to <span class="gradient-text">Succeed</span></h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5rem;">
+      <div class="stat-card">
+        <div class="stat-icon purple">🎯</div>
+        <div><div style="font-weight:700;font-size:1rem;margin-bottom:4px;">Structured Learning</div><div style="font-size:0.85rem;color:var(--text-muted);">Carefully ordered lessons to guide your journey from beginner to pro</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">📊</div>
+        <div><div style="font-weight:700;font-size:1rem;margin-bottom:4px;">Progress Tracking</div><div style="font-size:0.85rem;color:var(--text-muted);">Visual progress bars so you always know how far you've come</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon orange">⚡</div>
+        <div><div style="font-weight:700;font-size:1rem;margin-bottom:4px;">Learn at Your Pace</div><div style="font-size:0.85rem;color:var(--text-muted);">No deadlines, no pressure. Your progress is saved automatically</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon pink">🏆</div>
+        <div><div style="font-weight:700;font-size:1rem;margin-bottom:4px;">Expert Instructors</div><div style="font-size:0.85rem;color:var(--text-muted);">Learn from industry professionals with real-world experience</div></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🎓 LearnHub</div>
+  <p>Online Learning Platform — Internship Project &copy; 2026</p>
+</footer>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/index.js"></script>
+<script>initNavAuth();</script>
+</body>
+</html>

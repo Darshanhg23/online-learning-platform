@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Courses — LearnHub</title>
+  <meta name="description" content="Browse all available courses in Programming, Web Development, Backend, and Database. Filter by category or search by keyword."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo"><span class="logo-icon">🎓</span> LearnHub</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="courses.html" class="active">Courses</a></li>
+    <li><a href="dashboard.html">My Courses</a></li>
+    <li><a href="admin.html">⚙️ Admin</a></li>
+    <li><a href="dashboard.html" class="nav-cta">Dashboard</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <h1>📚 All Courses</h1>
+    <p>Explore our full catalog — filter by category or search by keyword</p>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <section class="section" style="padding-top:2.5rem;">
+
+    <!-- Search + Filter Row -->
+    <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin-bottom:1.75rem;">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search courses..." autocomplete="off"/>
+      </div>
+      <div style="margin-left:auto; color:var(--text-muted); font-size:0.88rem;">
+        Showing <strong id="courseCount" style="color:var(--text);">...</strong> courses
+      </div>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" id="filterAll" data-category="">All Categories</button>
+      <!-- Dynamic categories loaded via JS -->
+    </div>
+
+    <!-- Courses Grid -->
+    <div class="courses-grid" id="coursesGrid">
+      <div class="spinner-wrapper" style="grid-column:1/-1;"><div class="spinner"></div></div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state hidden" id="emptyState">
+      <div class="empty-icon">🔍</div>
+      <h3>No courses found</h3>
+      <p>Try a different keyword or category</p>
+      <button class="btn-primary" id="clearSearchBtn" onclick="clearSearch()">Clear Search</button>
+    </div>
+
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🎓 LearnHub</div>
+  <p>Online Learning Platform — Internship Project &copy; 2026</p>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/courses.js"></script>
+<script>initNavAuth();</script>
+</body>
+</html>

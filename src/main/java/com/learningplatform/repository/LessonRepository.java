@@ -27,6 +27,7 @@ public class LessonRepository {
             lesson.setTitle(rs.getString("title"));
             lesson.setLessonOrder(rs.getInt("lesson_order"));
             lesson.setDuration(rs.getString("duration"));
+            lesson.setVideoUrl(rs.getString("video_url"));
             return lesson;
         }
     };
@@ -42,5 +43,27 @@ public class LessonRepository {
         String sql = "SELECT * FROM lessons WHERE id = ?";
         List<Lesson> lessons = jdbcTemplate.query(sql, LESSON_ROW_MAPPER, id);
         return lessons.isEmpty() ? null : lessons.get(0);
+    }
+
+    // Save a new lesson
+    public void save(Lesson lesson) {
+        String sql = "INSERT INTO lessons (course_id, title, lesson_order, duration, video_url) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, lesson.getCourseId(), lesson.getTitle(), lesson.getLessonOrder(), lesson.getDuration(), lesson.getVideoUrl());
+    }
+
+    // Update an existing lesson
+    public void update(Lesson lesson) {
+        String sql = "UPDATE lessons SET title = ?, lesson_order = ?, duration = ?, video_url = ? WHERE id = ?";
+        jdbcTemplate.update(sql, lesson.getTitle(), lesson.getLessonOrder(), lesson.getDuration(), lesson.getVideoUrl(), lesson.getId());
+    }
+
+    // Delete a lesson
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM lessons WHERE id = ?", id);
+    }
+
+    // Delete all lessons for a course
+    public void deleteByCourseId(int courseId) {
+        jdbcTemplate.update("DELETE FROM lessons WHERE course_id = ?", courseId);
     }
 }

@@ -1,10 +1,8 @@
 com\learningplatform\repository\LessonProgressRepository$1.class
 com\learningplatform\model\LessonProgress.class
-com\learningplatform\model\ActivityLog.class
 com\learningplatform\repository\CourseRepository$1.class
 com\learningplatform\repository\UserRepository.class
 com\learningplatform\repository\LessonRepository$1.class
-com\learningplatform\repository\ActivityLogRepository.class
 com\learningplatform\repository\LessonProgressRepository.class
 com\learningplatform\controller\AuthController.class
 com\learningplatform\controller\AdminController.class

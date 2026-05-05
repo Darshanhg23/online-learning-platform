@@ -74,4 +74,39 @@ public class CourseRepository {
         String sql = "SELECT DISTINCT category FROM courses ORDER BY category";
         return jdbcTemplate.queryForList(sql, String.class);
     }
+
+    // Save a new course
+    public int save(Course course) {
+        String sql = "INSERT INTO courses (title, description, category, duration, instructor, thumbnail_url, is_featured, total_lessons) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
+                course.getTitle(),
+                course.getDescription(),
+                course.getCategory(),
+                course.getDuration(),
+                course.getInstructor(),
+                course.getThumbnailUrl(),
+                course.isFeatured(),
+                course.getTotalLessons());
+        return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+    }
+
+    // Update an existing course
+    public void update(Course course) {
+        String sql = "UPDATE courses SET title = ?, description = ?, category = ?, duration = ?, instructor = ?, thumbnail_url = ?, is_featured = ?, total_lessons = ? WHERE id = ?";
+        jdbcTemplate.update(sql,
+                course.getTitle(),
+                course.getDescription(),
+                course.getCategory(),
+                course.getDuration(),
+                course.getInstructor(),
+                course.getThumbnailUrl(),
+                course.isFeatured(),
+                course.getTotalLessons(),
+                course.getId());
+    }
+
+    // Delete a course
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM courses WHERE id = ?", id);
+    }
 }

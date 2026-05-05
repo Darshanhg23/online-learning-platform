@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS lessons (
     title VARCHAR(255) NOT NULL,
     lesson_order INT DEFAULT 1,
     duration VARCHAR(50),
+    video_url VARCHAR(500),
     FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
 );
 
@@ -54,22 +55,8 @@ CREATE TABLE IF NOT EXISTS lesson_progress (
     UNIQUE KEY unique_enrollment_lesson (enrollment_id, lesson_id)
 );
 
--- Activity log — every login, logout, register, enroll
-CREATE TABLE IF NOT EXISTS activity_logs (
-    id         INT AUTO_INCREMENT PRIMARY KEY,
-    user_id    INT,
-    user_email VARCHAR(255),
-    user_name  VARCHAR(150),
-    action     VARCHAR(100) NOT NULL,
-    detail     TEXT,
-    ip_address VARCHAR(45),
-    logged_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
--- =====================================================
 -- Migration: safely add user_id column to enrollments
--- (handles existing DBs that were created before auth)
--- =====================================================
 SET @col_exists = (
     SELECT COUNT(*) FROM information_schema.COLUMNS
     WHERE TABLE_SCHEMA = DATABASE()
@@ -80,6 +67,17 @@ SET @sql = IF(@col_exists = 0,
     'ALTER TABLE enrollments ADD COLUMN user_id INT NULL, ADD CONSTRAINT fk_enroll_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL',
     'SELECT "user_id column already exists"'
 );
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- Migration: safely add video_url column to lessons
+SET @vid_exists = (
+    SELECT COUNT(*) FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME   = 'lessons'
+      AND COLUMN_NAME  = 'video_url'
+);
+SET @sql_vid = IF(@vid_exists = 0,
+    'ALTER TABLE lessons ADD COLUMN video_url VARCHAR(500)',
+    'SELECT "video_url column already exists"'
+);
+PREPARE stmt_vid FROM @sql_vid; EXECUTE stmt_vid; DEALLOCATE PREPARE stmt_vid;

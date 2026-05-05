@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Certificate — LearnHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #1a1828;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+    }
+
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+
+    .cert-container {
+      background: #fff;
+      width: 297mm;
+      height: 210mm;
+      padding: 30mm;
+      position: relative;
+      color: #1a1828;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      border-radius: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-sizing: border-box;
+      border: 10mm solid #fff;
+      outline: 2px solid #e2e8f0;
+      outline-offset: -8mm;
+    }
+
+    /* Decorative Background Elements */
+    .cert-bg-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='%236c63ff' fill-rule='evenodd'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .cert-corner {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #6c63ff 0%, #a29bff 100%);
+      opacity: 0.1;
+      filter: blur(50px);
+      z-index: 0;
+    }
+    .top-left { top: -50px; left: -50px; }
+    .bottom-right { bottom: -50px; right: -50px; }
+
+    /* Content */
+    .cert-header { margin-top: 0; z-index: 1; }
+    .cert-logo { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: #6c63ff; margin-bottom: 2px; }
+    .cert-subtitle { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.7rem; font-weight: 700; color: #64748b; }
+
+    .cert-main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin: 20px 0 5px;
+      color: #1e1b33;
+    }
+
+    .cert-presentation { font-size: 1rem; color: #64748b; margin-bottom: 20px; }
+
+    .cert-recipient {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #6c63ff;
+      border-bottom: 2px solid #e2e8f0;
+      display: inline-block;
+      padding: 0 30px 5px;
+      margin-bottom: 20px;
+    }
+
+    .cert-body-text {
+      font-size: 1rem;
+      color: #64748b;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .cert-course-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1e1b33;
+      margin-top: 5px;
+    }
+
+    .cert-footer {
+      margin-top: auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      box-sizing: border-box;
+    }
+
+    .footer-item { display: flex; flex-direction: column; gap: 8px; }
+    .signature { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; color: #1e1b33; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; min-width: 180px; }
+    .footer-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; font-weight: 700; }
+
+    .cert-seal {
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, #facc15 0%, #ca8a04 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px rgba(202,138,4,0.3);
+      position: relative;
+    }
+    .seal-inner {
+      width: 80px;
+      height: 80px;
+      border: 2px dashed rgba(255,255,255,0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 2rem;
+    }
+
+    /* Print Controls */
+    .print-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+    @media print {
+      body { background: #fff; }
+      .print-controls { display: none; }
+      .cert-container { box-shadow: none; border: 15px solid #eee; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-controls">
+    <button onclick="window.print()" class="btn-primary" style="padding: 10px 20px;">🖨️ Print / Save as PDF</button>
+    <button onclick="window.close()" class="btn-secondary" style="padding: 10px 20px;">Close</button>
+  </div>
+
+  <div class="cert-container" id="printableArea">
+    <div class="cert-bg-pattern"></div>
+    <div class="cert-corner top-left"></div>
+    <div class="cert-corner bottom-right"></div>
+
+    <div class="cert-header">
+      <div class="cert-logo">🎓 LearnHub</div>
+      <div class="cert-subtitle">Certificate of Achievement</div>
+    </div>
+
+    <h1 class="cert-main-title">Certificate</h1>
+    <p class="cert-presentation">This is to certify that</p>
+    
+    <div class="cert-recipient" id="studentName">Student Name</div>
+
+    <p class="cert-body-text">
+      has successfully completed the online course requirements for
+      <div class="cert-course-name" id="courseTitle">Course Title</div>
+      <p style="font-size:0.9rem; color:#94a3b8; margin-top:15px;" id="completionDate">Issued on: May 5, 2026</p>
+    </p>
+
+    <div class="cert-footer">
+      <div class="footer-item">
+        <div class="signature">LearnHub Team</div>
+        <div class="footer-label">Course Director</div>
+      </div>
+
+      <div class="cert-seal">
+        <div class="seal-inner">🛡️</div>
+      </div>
+
+      <div class="footer-item">
+        <div class="signature" id="issueId">#LH-CERT-2026</div>
+        <div class="footer-label">Verification ID</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const user = await requireAuth();
+      const params = new URLSearchParams(window.location.search);
+      const courseName = params.get('course') || 'Professional Development';
+      const courseId = params.get('id') || '0';
+
+      if (user) {
+        document.getElementById('studentName').textContent = user.name;
+        document.getElementById('courseTitle').textContent = courseName;
+        document.getElementById('completionDate').textContent = `Issued on: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+        document.getElementById('issueId').textContent = `#LH-${courseId.padStart(3, '0')}-${user.id}-${Math.floor(Math.random()*9000)+1000}`;
+      }
+    });
+  </script>
+</body>
+</html>

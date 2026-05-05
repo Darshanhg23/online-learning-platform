@@ -48,14 +48,15 @@ async function loadDashboard() {
 function buildEnrolledCard(enrollment) {
   const { emoji, gradient } = getCategoryInfo(enrollment.courseCategory);
   const percent = enrollment.progressPercent || 0;
+  console.log(`Course: ${enrollment.courseTitle}, Progress: ${percent}%`);
 
   let statusBadge = '';
-  if (percent === 100) {
-    statusBadge = `<span style="background:rgba(67,233,123,0.15);color:var(--accent);border:1px solid rgba(67,233,123,0.3);padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">✅ Completed</span>`;
+  if (percent >= 100) {
+    statusBadge = `<span style="background:rgba(16,185,129,0.1);color:var(--color-emerald);border:1px solid rgba(16,185,129,0.2);padding:3px 10px;border-radius:var(--radius-sm);font-size:0.72rem;font-weight:700;">Completed</span>`;
   } else if (percent > 0) {
-    statusBadge = `<span style="background:rgba(247,151,30,0.15);color:#f7971e;border:1px solid rgba(247,151,30,0.3);padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">🔥 In Progress</span>`;
+    statusBadge = `<span style="background:rgba(245,158,11,0.1);color:var(--color-amber);border:1px solid rgba(245,158,11,0.2);padding:3px 10px;border-radius:var(--radius-sm);font-size:0.72rem;font-weight:700;">In Progress</span>`;
   } else {
-    statusBadge = `<span style="background:rgba(108,99,255,0.12);color:var(--primary-light);border:1px solid rgba(108,99,255,0.2);padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">📌 Not Started</span>`;
+    statusBadge = `<span style="background:var(--bg3);color:var(--text-muted);border:1px solid var(--border);padding:3px 10px;border-radius:var(--radius-sm);font-size:0.72rem;font-weight:700;">Not Started</span>`;
   }
 
   const completedLessons = Math.round((percent / 100) * (enrollment.courseTotalLessons || 0));
@@ -66,7 +67,7 @@ function buildEnrolledCard(enrollment) {
       <div class="enrolled-info">
         <div class="enrolled-category">${enrollment.courseCategory}</div>
         <div class="enrolled-title" title="${enrollment.courseTitle}">${enrollment.courseTitle}</div>
-        <div class="enrolled-instructor">👤 ${enrollment.courseInstructor} · ⏱️ ${enrollment.courseDuration}</div>
+        <div class="enrolled-instructor">Instructor: ${enrollment.courseInstructor} · Duration: ${enrollment.courseDuration}</div>
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;flex-wrap:wrap;">
           ${statusBadge}
           <span style="font-size:0.78rem;color:var(--text-dim);">${completedLessons} / ${enrollment.courseTotalLessons || 0} lessons</span>
@@ -74,8 +75,12 @@ function buildEnrolledCard(enrollment) {
         ${buildProgressBar(percent)}
       </div>
       <div class="enrolled-actions">
-        <a href="course-detail.html?id=${enrollment.courseId}" class="btn-resume">
-          ${percent === 100 ? '🔁 Review' : '▶️ Resume'}
+        ${percent >= 100 
+          ? `<a href="certificate.html?id=${enrollment.courseId}&course=${encodeURIComponent(enrollment.courseTitle)}" target="_blank" class="btn-primary" style="padding: 10px 15px; font-size: 0.8rem; background: #eab308; color: #fff; border: none; box-shadow: var(--shadow-card);">Get Certificate</a>` 
+          : ''
+        }
+        <a href="course-detail.html?id=${enrollment.courseId}" class="btn-resume" style="${percent >= 100 ? 'background:var(--bg3); color:var(--text);' : ''}">
+          ${percent >= 100 ? 'Review' : 'Resume'}
         </a>
       </div>
     </div>

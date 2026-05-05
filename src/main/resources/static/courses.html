@@ -6,18 +6,17 @@
   <title>All Courses — LearnHub</title>
   <meta name="description" content="Browse all available courses in Programming, Web Development, Backend, and Database. Filter by category or search by keyword."/>
   <link rel="stylesheet" href="css/style.css"/>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><path d='M20 40 L50 20 L80 40 L50 60 Z' fill='white'/></svg>" />
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <a href="index.html" class="nav-logo"><span class="logo-icon">🎓</span> LearnHub</a>
+  <a href="index.html" class="nav-logo">LearnHub</a>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="courses.html" class="active">Courses</a></li>
     <li><a href="dashboard.html">My Courses</a></li>
-    <li><a href="admin.html">⚙️ Admin</a></li>
     <li><a href="dashboard.html" class="nav-cta">Dashboard</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -29,7 +28,7 @@
 
   <!-- PAGE HERO -->
   <div class="page-hero">
-    <h1>📚 All Courses</h1>
+    <h1>All Courses</h1>
     <p>Explore our full catalog — filter by category or search by keyword</p>
   </div>
 
@@ -39,7 +38,7 @@
     <!-- Search + Filter Row -->
     <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin-bottom:1.75rem;">
       <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon">S</span>
         <input type="text" id="searchInput" class="search-input" placeholder="Search courses..." autocomplete="off"/>
       </div>
       <div style="margin-left:auto; color:var(--text-muted); font-size:0.88rem;">
@@ -60,7 +59,7 @@
 
     <!-- Empty State -->
     <div class="empty-state hidden" id="emptyState">
-      <div class="empty-icon">🔍</div>
+      <div class="empty-icon">!</div>
       <h3>No courses found</h3>
       <p>Try a different keyword or category</p>
       <button class="btn-primary" id="clearSearchBtn" onclick="clearSearch()">Clear Search</button>
@@ -71,7 +70,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">🎓 LearnHub</div>
+  <div class="footer-logo">LearnHub</div>
   <p>Online Learning Platform — Internship Project &copy; 2026</p>
 </footer>
 

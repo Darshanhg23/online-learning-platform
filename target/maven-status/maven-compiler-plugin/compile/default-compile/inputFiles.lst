@@ -4,7 +4,6 @@ C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatfo
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\repository\LessonRepository.java
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\repository\CourseRepository.java
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\controller\AdminController.java
-C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\model\ActivityLog.java
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\model\LessonProgress.java
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\controller\AuthController.java
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\repository\UserRepository.java
@@ -15,4 +14,3 @@ C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatfo
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\controller\CourseController.java
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\controller\LessonController.java
 C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\model\Course.java
-C:\Users\darsh\Desktop\Online Learning Platform\src\main\java\com\learningplatform\repository\ActivityLogRepository.java

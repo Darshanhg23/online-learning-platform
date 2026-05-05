@@ -12,7 +12,7 @@ SELECT * FROM (SELECT
     'Dr. Anita Sharma' AS instructor,
     '/images/java-course.png' AS thumbnail_url,
     TRUE AS is_featured,
-    6 AS total_lessons
+    7 AS total_lessons
 ) AS tmp WHERE NOT EXISTS (SELECT 1 FROM courses LIMIT 1);
 
 INSERT INTO courses (title, description, category, duration, instructor, thumbnail_url, is_featured, total_lessons)
@@ -24,7 +24,7 @@ SELECT * FROM (SELECT
     'Rahul Verma' AS instructor,
     '/images/web-course.png' AS thumbnail_url,
     TRUE AS is_featured,
-    5 AS total_lessons
+    6 AS total_lessons
 ) AS tmp WHERE NOT EXISTS (SELECT 1 FROM courses WHERE title = 'Web Development with HTML & CSS');
 
 INSERT INTO courses (title, description, category, duration, instructor, thumbnail_url, is_featured, total_lessons)
@@ -36,7 +36,7 @@ SELECT * FROM (SELECT
     'Priya Patel' AS instructor,
     '/images/spring-course.png' AS thumbnail_url,
     TRUE AS is_featured,
-    7 AS total_lessons
+    8 AS total_lessons
 ) AS tmp WHERE NOT EXISTS (SELECT 1 FROM courses WHERE title = 'Spring Boot Backend Development');
 
 INSERT INTO courses (title, description, category, duration, instructor, thumbnail_url, is_featured, total_lessons)
@@ -48,7 +48,7 @@ SELECT * FROM (SELECT
     'Amit Singh' AS instructor,
     '/images/mysql-course.png' AS thumbnail_url,
     FALSE AS is_featured,
-    5 AS total_lessons
+    6 AS total_lessons
 ) AS tmp WHERE NOT EXISTS (SELECT 1 FROM courses WHERE title = 'MySQL Database Design');
 
 INSERT INTO courses (title, description, category, duration, instructor, thumbnail_url, is_featured, total_lessons)
@@ -60,7 +60,7 @@ SELECT * FROM (SELECT
     'Sneha Kapoor' AS instructor,
     '/images/js-course.png' AS thumbnail_url,
     FALSE AS is_featured,
-    6 AS total_lessons
+    7 AS total_lessons
 ) AS tmp WHERE NOT EXISTS (SELECT 1 FROM courses WHERE title = 'JavaScript Essentials');
 
 INSERT INTO courses (title, description, category, duration, instructor, thumbnail_url, is_featured, total_lessons)
@@ -72,85 +72,106 @@ SELECT * FROM (SELECT
     'Dr. Anita Sharma' AS instructor,
     '/images/oop-course.png' AS thumbnail_url,
     FALSE AS is_featured,
-    5 AS total_lessons
+    6 AS total_lessons
 ) AS tmp WHERE NOT EXISTS (SELECT 1 FROM courses WHERE title = 'Object Oriented Programming in Java');
 
 -- Lessons for Course 1 (Java Programming)
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 1, 'Introduction to Java & JDK Setup', 1, '45 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 1);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 1, 'Variables, Data Types & Operators', 2, '60 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 2);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 1, 'Control Flow: if, loops & switch', 3, '55 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 3);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 1, 'Methods and Functions', 4, '50 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 4);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 1, 'Arrays and Collections', 5, '65 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 5);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 1, 'Exception Handling & Best Practices', 6, '50 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 6);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 1, 'Introduction to Java & JDK Setup', 1, '45 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 1);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 1, 'Variables, Data Types & Operators', 2, '60 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 2);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 1, 'Control Flow: if, loops & switch', 3, '55 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 3);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 1, 'Methods and Functions', 4, '50 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 4);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 1, 'Arrays and Collections', 5, '65 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 1, 'Exception Handling & Best Practices', 6, '50 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 6);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 1, 'Course Completion Video - HTML & CSS Overview', 7, '30 sec', 'https://www.w3schools.com/html/mov_bbb.mp4' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 1 AND lesson_order = 7);
 
 -- Lessons for Course 2 (Web Development)
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 2, 'HTML5 Structure & Semantics', 1, '40 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 1);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 2, 'CSS3 Styling & Box Model', 2, '55 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 2);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 2, 'Flexbox & Grid Layouts', 3, '60 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 3);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 2, 'Responsive Design & Media Queries', 4, '50 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 4);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 2, 'Building a Complete Website', 5, '90 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 2, 'HTML5 Structure & Semantics', 1, '40 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 1);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 2, 'CSS3 Styling & Box Model', 2, '55 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 2);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 2, 'Flexbox & Grid Layouts', 3, '60 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 3);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 2, 'Responsive Design & Media Queries', 4, '50 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 4);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 2, 'Building a Complete Website', 5, '90 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 2, 'Course Completion Video - HTML & CSS Overview', 6, '30 sec', 'https://www.w3schools.com/html/mov_bbb.mp4' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 2 AND lesson_order = 6);
 
 -- Lessons for Course 3 (Spring Boot)
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 3, 'Spring Boot Introduction & Setup', 1, '50 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 1);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 3, 'Spring MVC & REST Controllers', 2, '65 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 2);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 3, 'Spring JDBC & DataSource', 3, '70 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 3);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 3, 'MySQL Integration', 4, '60 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 4);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 3, 'Request/Response & JSON', 5, '55 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 5);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 3, 'Exception Handling in REST', 6, '45 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 6);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 3, 'Deploying Spring Boot App', 7, '60 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 7);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 3, 'Spring Boot Introduction & Setup', 1, '50 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 1);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 3, 'Spring MVC & REST Controllers', 2, '65 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 2);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 3, 'Spring JDBC & DataSource', 3, '70 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 3);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 3, 'MySQL Integration', 4, '60 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 4);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 3, 'Request/Response & JSON', 5, '55 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 3, 'Exception Handling in REST', 6, '45 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 6);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 3, 'Deploying Spring Boot App', 7, '60 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 7);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 3, 'Course Completion Video - HTML & CSS Overview', 8, '30 sec', 'https://www.w3schools.com/html/mov_bbb.mp4' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 3 AND lesson_order = 8);
 
 -- Lessons for Course 4 (MySQL)
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 4, 'Introduction to Databases & SQL', 1, '40 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 1);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 4, 'DDL & DML Commands', 2, '55 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 2);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 4, 'Joins, Subqueries & Views', 3, '70 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 3);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 4, 'Indexes & Performance Tuning', 4, '60 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 4);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 4, 'Stored Procedures & Triggers', 5, '65 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 4, 'Introduction to Databases & SQL', 1, '40 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 1);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 4, 'DDL & DML Commands', 2, '55 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 2);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 4, 'Joins, Subqueries & Views', 3, '70 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 3);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 4, 'Indexes & Performance Tuning', 4, '60 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 4);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 4, 'Stored Procedures & Triggers', 5, '65 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 4, 'Course Completion Video - HTML & CSS Overview', 6, '30 sec', 'https://www.w3schools.com/html/mov_bbb.mp4' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 4 AND lesson_order = 6);
 
 -- Lessons for Course 5 (JavaScript)
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 5, 'JavaScript Basics & ES6+', 1, '50 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 1);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 5, 'DOM Manipulation', 2, '60 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 2);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 5, 'Events & Event Listeners', 3, '45 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 3);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 5, 'Fetch API & AJAX', 4, '55 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 4);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 5, 'LocalStorage & SessionStorage', 5, '40 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 5);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 5, 'Building an Interactive App', 6, '80 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 6);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 5, 'JavaScript Basics & ES6+', 1, '50 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 1);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 5, 'DOM Manipulation', 2, '60 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 2);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 5, 'Events & Event Listeners', 3, '45 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 3);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 5, 'Fetch API & AJAX', 4, '55 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 4);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 5, 'LocalStorage & SessionStorage', 5, '40 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 5, 'Building an Interactive App', 6, '80 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 6);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 5, 'Course Completion Video - HTML & CSS Overview', 7, '30 sec', 'https://www.w3schools.com/html/mov_bbb.mp4' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 5 AND lesson_order = 7);
 
 -- Lessons for Course 6 (OOP)
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 6, 'Classes, Objects & Constructors', 1, '50 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 1);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 6, 'Encapsulation & Access Modifiers', 2, '45 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 2);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 6, 'Inheritance & super Keyword', 3, '55 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 3);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 6, 'Polymorphism & Method Overriding', 4, '60 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 4);
-INSERT INTO lessons (course_id, title, lesson_order, duration)
-SELECT 6, 'Abstraction & Interfaces', 5, '50 min' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 6, 'Classes, Objects & Constructors', 1, '50 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 1);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 6, 'Encapsulation & Access Modifiers', 2, '45 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 2);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 6, 'Inheritance & super Keyword', 3, '55 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 3);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 6, 'Polymorphism & Method Overriding', 4, '60 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 4);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 6, 'Abstraction & Interfaces', 5, '50 min', NULL WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 5);
+INSERT INTO lessons (course_id, title, lesson_order, duration, video_url)
+SELECT 6, 'Course Completion Video - HTML & CSS Overview', 6, '30 sec', 'https://www.w3schools.com/html/mov_bbb.mp4' WHERE NOT EXISTS (SELECT 1 FROM lessons WHERE course_id = 6 AND lesson_order = 6);
+
+-- Admin User (admin@learnhub.com / admin123)
+INSERT INTO users (name, email, password_hash, role)
+SELECT 'System Admin', 'admin@learnhub.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', 'ADMIN'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'admin@learnhub.com');
+
+-- UPDATE existing lessons to have professional videos instead of cartoons/NULL
+UPDATE lessons SET video_url = 'https://vjs.zencdn.net/v/oceans.mp4' WHERE video_url IS NULL OR video_url LIKE '%mov_bbb.mp4';
+UPDATE lessons SET title = 'Course Completion Mastery' WHERE title LIKE 'Course Completion Video%';

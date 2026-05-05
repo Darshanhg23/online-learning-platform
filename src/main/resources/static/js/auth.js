@@ -60,6 +60,14 @@ async function initNavAuth() {
       const user = await res.json();
       setCurrentUser(user);
 
+      // Show Admin link ONLY for ADMIN role
+      if (user.role === 'ADMIN') {
+        const liAdmin = document.createElement('li');
+        liAdmin.className = 'nav-auth-item';
+        liAdmin.innerHTML = `<a href="admin.html">⚙️ Admin</a>`;
+        navLinks.appendChild(liAdmin);
+      }
+
       // Show user avatar + logout
       const li1 = document.createElement('li');
       li1.className = 'nav-auth-item';
@@ -93,8 +101,21 @@ async function handleLogout() {
   window.location.href = 'login.html';
 }
 
+/**
+ * Redirect to home if not admin.
+ */
+async function requireAdmin() {
+  const user = await requireAuth();
+  if (user && user.role !== 'ADMIN') {
+    window.location.href = 'index.html';
+    return null;
+  }
+  return user;
+}
+
 // Expose globally
 window.handleLogout = handleLogout;
 window.requireAuth  = requireAuth;
+window.requireAdmin = requireAdmin;
 window.initNavAuth  = initNavAuth;
 window.getCurrentUser = getCurrentUser;

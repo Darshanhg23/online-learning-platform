@@ -122,23 +122,98 @@ function buildLessonItem(lesson, completed, enrolled) {
   const completedClass = completed ? 'completed' : '';
   const checkIcon = completed ? '✓' : '';
   const statusText = completed ? '<span class="lesson-status">✅ Completed</span>' : '';
-
+  const videoIcon = lesson.videoUrl ? '🎬 ' : '';
+  
+  // Status is now read-only. Completion is triggered by the video at the end of the course.
   return `
     <div class="lesson-item ${completedClass}" id="lesson-item-${lesson.id}">
       <div class="lesson-check" id="check-${lesson.id}"
-        onclick="${enrolled ? `toggleLesson(${lesson.id})` : 'showEnrollAlert()'}"
-        title="${enrolled ? 'Click to toggle completion' : 'Enroll to track progress'}">
+        title="${completed ? 'Lesson Completed' : 'Watch video to complete course'}">
         ${checkIcon}
       </div>
       <div class="lesson-num">${lesson.lessonOrder}</div>
-      <div class="lesson-info">
-        <div class="lesson-title">${lesson.title}</div>
+      <div class="lesson-info" style="cursor:pointer;" onclick="${enrolled ? `playLessonVideo(${lesson.id})` : 'showEnrollAlert()'}">
+        <div class="lesson-title">${videoIcon}${lesson.title}</div>
         <div class="lesson-duration">⏱️ ${lesson.duration}</div>
       </div>
       ${statusText}
     </div>
   `;
 }
+
+function showVideoAlert() {
+  showToast('Please watch the video to the end to complete this lesson! 🎥', 'info');
+}
+window.showVideoAlert = showVideoAlert;
+
+// ---- Video Player Logic ----
+function playLessonVideo(lessonId) {
+  const lesson = lessons.find(l => l.id === lessonId);
+  if (!lesson || !lesson.videoUrl) return;
+
+  const section = document.getElementById('videoPlayerSection');
+  const video = document.getElementById('courseVideo');
+  const title = document.getElementById('nowPlayingTitle');
+
+  title.textContent = lesson.title;
+  video.src = lesson.videoUrl;
+  section.classList.remove('hidden');
+  
+  // Scroll to video
+  section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  video.play();
+
+  // Automatic completion when video ends
+  video.onended = async () => {
+    const isLastLesson = lesson.lessonOrder === lessons.length;
+    
+    if (isLastLesson) {
+      showToast('Final video finished! Completing course... 🏆', 'success');
+    } else {
+      showToast(`'${lesson.title}' completed! 🎉`, 'success');
+    }
+    
+    try {
+      if (isLastLesson) {
+        // Mark ALL lessons in this course as complete to finish the course instantly
+        const completionPromises = lessons.map(l => 
+          apiPost(`/lessons/${l.id}/complete`, { enrollmentId: currentEnrollmentId })
+        );
+        await Promise.all(completionPromises);
+        lessons.forEach(l => completedLessonIds.add(l.id));
+      } else {
+        // Just mark this single lesson as complete
+        await apiPost(`/lessons/${lessonId}/complete`, { enrollmentId: currentEnrollmentId });
+        completedLessonIds.add(lessonId);
+      }
+      
+      refreshLessonUI();
+      
+      const percent = Math.round((completedLessonIds.size / lessons.length) * 100);
+      updateProgressUI(percent, completedLessonIds.size, lessons.length);
+      
+      if (percent === 100) {
+        showCertificateLink();
+        showToast('🏆 Course 100% complete! Congratulations!', 'success');
+      }
+    } catch (err) {
+      console.error('Failed to complete lesson:', err);
+      showToast('Error saving progress. Please try again.', 'error');
+    }
+  };
+}
+
+function closeVideoPlayer() {
+  const section = document.getElementById('videoPlayerSection');
+  const video = document.getElementById('courseVideo');
+  video.pause();
+  video.src = '';
+  section.classList.add('hidden');
+}
+
+window.playLessonVideo = playLessonVideo;
+window.closeVideoPlayer = closeVideoPlayer;
 
 async function loadLessonProgress() {
   try {
@@ -147,14 +222,33 @@ async function loadLessonProgress() {
       progressList.filter(lp => lp.completed).map(lp => lp.lessonId)
     );
     refreshLessonUI();
+    
+    const percent = Math.round((completedLessonIds.size / lessons.length) * 100);
     updateProgressUI(
-      Math.round((completedLessonIds.size / lessons.length) * 100),
+      percent,
       completedLessonIds.size,
       lessons.length
     );
+
+    // If 100% complete, show certificate button if it exists
+    if (percent === 100) {
+      showCertificateLink();
+    }
   } catch (err) {
     console.error('Failed to load lesson progress:', err);
   }
+}
+
+function showCertificateLink() {
+  const btn = document.getElementById('enrollBtn');
+  // Get course title from current UI
+  const courseTitle = document.getElementById('detailTitle').textContent;
+  
+  btn.innerHTML = '🏆 Claim Certificate';
+  btn.disabled = false;
+  btn.classList.remove('enrolled');
+  btn.style.background = 'linear-gradient(135deg, var(--accent2), #ffca28)';
+  btn.onclick = () => window.location.href = `certificate.html?id=${currentCourseId}&course=${encodeURIComponent(courseTitle)}`;
 }
 
 function refreshLessonUI() {
@@ -209,7 +303,18 @@ async function toggleLesson(lessonId) {
     updateProgressUI(percent, completedLessonIds.size, lessons.length);
 
     if (percent === 100) {
-      setTimeout(() => showToast('🏆 Course completed! Congratulations!', 'success'), 400);
+      setTimeout(() => {
+        showToast('🏆 Course completed! Congratulations!', 'success');
+        showCertificateLink();
+      }, 400);
+    } else {
+      // If no longer 100%, revert button
+      const btn = document.getElementById('enrollBtn');
+      btn.innerHTML = '✅ Already Enrolled';
+      btn.disabled = true;
+      btn.classList.add('enrolled');
+      btn.style.background = '';
+      btn.onclick = handleEnroll;
     }
   } catch (err) {
     showToast('Failed to update lesson. Try again.', 'error');

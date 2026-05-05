@@ -6,10 +6,10 @@ const API_BASE = '/api';
 
 // ---- Category Emoji Map ----
 const CATEGORY_EMOJI = {
-  'Programming':     { emoji: '☕', gradient: 'linear-gradient(135deg,#f7971e,#ffd200)' },
-  'Web Development': { emoji: '🌐', gradient: 'linear-gradient(135deg,#6c63ff,#a29bff)' },
-  'Backend':         { emoji: '⚙️', gradient: 'linear-gradient(135deg,#43e97b,#38f9d7)' },
-  'Database':        { emoji: '🗄️', gradient: 'linear-gradient(135deg,#ff6584,#f953c6)' },
+  'Programming':     { emoji: '☕', gradient: 'linear-gradient(135deg,#6366f1,#8b5cf6)' },
+  'Web Development': { emoji: '🌐', gradient: 'linear-gradient(135deg,#2563eb,#06b6d4)' },
+  'Backend':         { emoji: '⚙️', gradient: 'linear-gradient(135deg,#10b981,#059669)' },
+  'Database':        { emoji: '🗄️', gradient: 'linear-gradient(135deg,#f59e0b,#d97706)' },
 };
 
 function getCategoryInfo(category) {
@@ -69,7 +69,7 @@ function buildCourseCard(course, enrolled = false) {
   const enrolledIcon = enrolled ? '✅ Enrolled' : '🚀 Enroll Now';
 
   return `
-    <div class="course-card" id="card-${course.id}">
+    <div class="course-card" id="card-${course.id}" data-category="${course.category}">
       <div class="card-thumbnail">
         <div class="card-thumbnail-placeholder" style="background:${gradient}">
           ${emoji}
@@ -80,8 +80,8 @@ function buildCourseCard(course, enrolled = false) {
         <h3 class="card-title">${course.title}</h3>
         <p class="card-desc">${course.description}</p>
         <div class="card-meta">
-          <span>⏱️ ${course.duration}</span>
-          <span>📖 ${course.totalLessons} lessons</span>
+          <span>Duration: ${course.duration}</span>
+          <span>${course.totalLessons} lessons</span>
         </div>
         <div class="card-instructor">
           <div class="avatar-sm">${initials}</div>
@@ -94,7 +94,7 @@ function buildCourseCard(course, enrolled = false) {
           ${enrolledIcon}
         </button>
         <a href="course-detail.html?id=${course.id}" class="btn-view-course">
-          📖 View Course →
+          View Course →
         </a>
       </div>
     </div>

@@ -6,15 +6,17 @@ public class Lesson {
     private String title;
     private int lessonOrder;
     private String duration;
+    private String videoUrl;
 
     public Lesson() {}
 
-    public Lesson(int id, int courseId, String title, int lessonOrder, String duration) {
+    public Lesson(int id, int courseId, String title, int lessonOrder, String duration, String videoUrl) {
         this.id = id;
         this.courseId = courseId;
         this.title = title;
         this.lessonOrder = lessonOrder;
         this.duration = duration;
+        this.videoUrl = videoUrl;
     }
 
     // Getters and Setters
@@ -32,6 +34,9 @@ public class Lesson {
 
     public String getDuration() { return duration; }
     public void setDuration(String duration) { this.duration = duration; }
+
+    public String getVideoUrl() { return videoUrl; }
+    public void setVideoUrl(String videoUrl) { this.videoUrl = videoUrl; }
 
     @Override
     public String toString() {

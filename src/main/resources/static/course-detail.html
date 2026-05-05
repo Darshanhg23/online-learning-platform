@@ -6,13 +6,13 @@
   <title>Course Detail — LearnHub</title>
   <meta name="description" content="View course details, lessons, and enroll to start learning."/>
   <link rel="stylesheet" href="css/style.css"/>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><path d='M20 40 L50 20 L80 40 L50 60 Z' fill='white'/></svg>" />
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <a href="index.html" class="nav-logo"><span class="logo-icon">🎓</span> LearnHub</a>
+  <a href="index.html" class="nav-logo">LearnHub</a>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="courses.html" class="active">Courses</a></li>
@@ -51,8 +51,8 @@
 
       <!-- Right: Enrollment Card -->
       <div class="enrollment-card">
-        <div class="course-thumb-preview" id="detailThumbPreview">📘</div>
-        <h3>🎯 Ready to Learn?</h3>
+        <div class="course-thumb-preview" id="detailThumbPreview">C</div>
+        <h3>Ready to Learn?</h3>
 
         <!-- Progress (shown if enrolled) -->
         <div id="progressSection" class="hidden">
@@ -71,26 +71,44 @@
         </div>
 
         <button class="btn-enroll-big" id="enrollBtn" onclick="handleEnroll()">
-          🚀 Enroll Now — It's Free
+          Enroll Now — It's Free
         </button>
         <div id="enrollMessage" style="font-size:0.8rem; color:var(--text-muted); text-align:center; margin-top:0.5rem;"></div>
 
         <div style="margin-top:1.25rem; border-top:1px solid var(--border-light); padding-top:1.25rem;">
           <div style="display:flex; flex-direction:column; gap:0.6rem; font-size:0.85rem; color:var(--text-muted);">
-            <span>⏱️ Duration: <strong id="cardDuration" style="color:var(--text);">—</strong></span>
-            <span>📖 Lessons: <strong id="cardLessons" style="color:var(--text);">—</strong></span>
-            <span>👤 Instructor: <strong id="cardInstructor" style="color:var(--text);">—</strong></span>
+            <span>Duration: <strong id="cardDuration" style="color:var(--text);">—</strong></span>
+            <span>Lessons: <strong id="cardLessons" style="color:var(--text);">—</strong></span>
+            <span>Instructor: <strong id="cardInstructor" style="color:var(--text);">—</strong></span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Video Player Section (Hidden by default) -->
+  <section id="videoPlayerSection" class="video-section hidden">
+    <div class="video-container">
+      <div class="video-header">
+        <h2 id="nowPlayingTitle">Lesson Title</h2>
+        <button class="btn-close-video" onclick="closeVideoPlayer()">✕ Close</button>
+      </div>
+      <div class="video-wrapper">
+        <video id="courseVideo" controls width="100%" poster="/images/video-poster.png">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="video-footer">
+        <p>Watching this video to completion will automatically mark the lesson as finished.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Lessons Section -->
   <section class="lessons-section" id="lessonsSection" style="display:none;">
-    <h2>📋 Course Lessons</h2>
+    <h2>Course Lessons</h2>
     <div id="notEnrolledNote" class="hidden" style="background:rgba(108,99,255,0.08); border:1px solid rgba(108,99,255,0.2); border-radius:var(--radius-sm); padding:1rem 1.25rem; margin-bottom:1.5rem; font-size:0.88rem; color:var(--text-muted);">
-      🔒 Enroll in this course to track your lesson progress and mark completions.
+      Enroll in this course to track your lesson progress and mark completions.
     </div>
     <div class="lesson-list" id="lessonList">
       <!-- Loaded via JS -->
@@ -101,7 +119,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">🎓 LearnHub</div>
+  <div class="footer-logo">LearnHub</div>
   <p>Online Learning Platform — Internship Project &copy; 2026</p>
 </footer>
 

@@ -1,8 +1,6 @@
 package com.learningplatform.controller;
 
-import com.learningplatform.model.ActivityLog;
 import com.learningplatform.model.Enrollment;
-import com.learningplatform.repository.ActivityLogRepository;
 import com.learningplatform.repository.CourseRepository;
 import com.learningplatform.repository.EnrollmentRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,14 +19,11 @@ import java.util.Optional;
 public class EnrollmentController {
 
     private final EnrollmentRepository enrollmentRepository;
-    private final ActivityLogRepository activityLogRepository;
     private final CourseRepository courseRepository;
 
     public EnrollmentController(EnrollmentRepository enrollmentRepository,
-                                ActivityLogRepository activityLogRepository,
                                 CourseRepository courseRepository) {
         this.enrollmentRepository = enrollmentRepository;
-        this.activityLogRepository = activityLogRepository;
         this.courseRepository = courseRepository;
     }
 
@@ -55,18 +50,12 @@ public class EnrollmentController {
 
         int enrollmentId = enrollmentRepository.enroll(courseId, userId);
 
-        // Look up course title for the activity log
+        // Look up course title for printing
         String courseTitle = courseRepository.findById(courseId)
                 .map(c -> c.getTitle())
                 .orElse("Course #" + courseId);
 
         String userEmail = (String) session.getAttribute("userEmail");
-        String userName  = (String) session.getAttribute("userName");
-
-        // Log the enrollment event
-        activityLogRepository.log(new ActivityLog(
-                userId, userEmail, userName, "ENROLL",
-                "Enrolled in: " + courseTitle, getClientIp(request)));
 
         System.out.println("✅ ENROLL: " + userEmail + " → " + courseTitle);
 
@@ -119,11 +108,5 @@ public class EnrollmentController {
                                          "enrollmentId", id,
                                          "progressPercent", percent));
     }
-
-    // ── Utility ─────────────────────────────────────────────────────────────
-    private String getClientIp(HttpServletRequest request) {
-        String forwarded = request.getHeader("X-Forwarded-For");
-        if (forwarded != null && !forwarded.isEmpty()) return forwarded.split(",")[0].trim();
-        return request.getRemoteAddr();
-    }
 }
+

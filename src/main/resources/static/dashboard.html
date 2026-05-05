@@ -6,18 +6,17 @@
   <title>My Courses — LearnHub Dashboard</title>
   <meta name="description" content="Your personal learning dashboard. View enrolled courses, track progress, and resume learning."/>
   <link rel="stylesheet" href="css/style.css"/>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><path d='M20 40 L50 20 L80 40 L50 60 Z' fill='white'/></svg>" />
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <a href="index.html" class="nav-logo"><span class="logo-icon">🎓</span> LearnHub</a>
+  <a href="index.html" class="nav-logo">LearnHub</a>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="courses.html">Courses</a></li>
     <li><a href="dashboard.html" class="active">My Courses</a></li>
-    <li><a href="admin.html">⚙️ Admin</a></li>
     <li><a href="dashboard.html" class="nav-cta">Dashboard</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -28,7 +27,7 @@
 <div class="page-wrapper">
 
   <div class="page-hero">
-    <h1>📊 My Learning Dashboard</h1>
+    <h1>My Learning Dashboard</h1>
     <p>Track your progress and resume your courses</p>
   </div>
 
@@ -37,28 +36,28 @@
     <!-- Stats Row -->
     <div class="dashboard-stats" id="dashboardStats">
       <div class="stat-card">
-        <div class="stat-icon purple">📚</div>
+        <div class="stat-icon purple">C</div>
         <div class="stat-info">
           <div class="stat-number" id="statEnrolled">—</div>
           <div class="stat-label">Enrolled Courses</div>
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon green">✅</div>
+        <div class="stat-icon green">D</div>
         <div class="stat-info">
           <div class="stat-number" id="statCompleted">—</div>
           <div class="stat-label">Completed</div>
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon orange">📈</div>
+        <div class="stat-icon orange">P</div>
         <div class="stat-info">
           <div class="stat-number" id="statAvgProgress">—</div>
           <div class="stat-label">Avg. Progress</div>
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon pink">🔥</div>
+        <div class="stat-icon pink">S</div>
         <div class="stat-info">
           <div class="stat-number" id="statInProgress">—</div>
           <div class="stat-label">In Progress</div>
@@ -68,7 +67,7 @@
 
     <!-- Enrolled Courses List -->
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
-      <h2 style="font-family:'Outfit',sans-serif; font-size:1.35rem; font-weight:700;">My Enrolled Courses</h2>
+      <h2 style="font-family:'Inter',sans-serif; font-size:1.35rem; font-weight:700;">My Enrolled Courses</h2>
       <a href="courses.html" class="btn-secondary" style="padding:8px 20px; font-size:0.85rem;">+ Browse More</a>
     </div>
 
@@ -80,10 +79,10 @@
 
     <!-- Empty State -->
     <div class="empty-state hidden" id="dashboardEmpty">
-      <div class="empty-icon">📭</div>
+      <div class="empty-icon">!</div>
       <h3>No courses yet!</h3>
       <p>You haven't enrolled in any courses. Start your learning journey today.</p>
-      <a href="courses.html" class="btn-primary" id="browseCoursesDashBtn">🚀 Browse Courses</a>
+      <a href="courses.html" class="btn-primary" id="browseCoursesDashBtn">Browse Courses</a>
     </div>
 
   </section>
@@ -91,7 +90,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">🎓 LearnHub</div>
+  <div class="footer-logo">LearnHub</div>
   <p>Online Learning Platform — Internship Project &copy; 2026</p>
 </footer>
 
